@@ -5,7 +5,7 @@
   - `createVMFromSnap.ps1`: usado no **WINDOWS**: cria uma VM a partir de um snapshot tirado de uma VM modelo
   - `router.sh`: usado no **LINUX**: configura o servidor Linux para ser usado como roteador e DNS Server
   - `files`:
-    - `nftables.conf`: a configuração do Firewall NFT
+    - `nftables.conf`: a configuração do Firewall NFTables
     
 ## `createVMFromSnap.ps1`: How to use?
 Execute, no PowerShell COMO ADMINISTRADOR, o comando abaixo e leia o **DESCRIPTION**:
@@ -25,3 +25,15 @@ Uma VM chamada "Router" no Hyper-V deve ser gerada a partir do script `createVMF
 3. Adicione uma interface de rede na Default Switch em uma vlan específica (ex.: vlan 2)
 4. Na interface 1 (geralmente `eth0`), configure um IP FIXO que se comunique com a internet (uma ideia para saber qual IP FIXO usar, seria configurar a interface primeiro para DHCP, obter seus dados e, depois, alterar a interface para IP FIXO colocando os dados obtidos anteriormente).
 5. Coloque o script nessa VM e execute-o: ele habilitará o roteamento, configurará o NFT Router e também, configurará um IP (172.16.1.1/16) para a interface `eth1`.
+
+## `nftables.conf`: How to use?
+
+Para aplicar as configurações:
+```sh
+# nft -f /etc/nftables.conf
+```
+
+Para ver as regras do firewall em uso no momento:
+```sh
+# nft list ruleset
+```
