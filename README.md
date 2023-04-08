@@ -54,7 +54,7 @@ systemctl restart systemd-resolved.service
 # ip route # FIXED gateway
 # resolvectl status # FIXED DNS Server
 ```
-6. Depois de colocar o arquivo `nftables.conf` no diretório `files` (ler abaixo), coloque o script `router.sh nessa VM e execute-o: ele habilitará o roteamento, configurará o NFTables Router e também, configurará um IP (172.16.1.1/16) para a interface `eth1`.
+6. Depois de colocar o arquivo `nftables.conf` no diretório `files` (ler abaixo), coloque o script `router.sh` nessa VM e execute-o: ele habilitará o roteamento, configurará o NFTables Router e também, configurará um IP (172.16.1.1/16) para a interface `eth1`.
 
 ## `nftables.conf`: How to use?
 
