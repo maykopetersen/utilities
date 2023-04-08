@@ -58,6 +58,7 @@ systemctl restart systemd-resolved.service
 
 ## `nftables.conf`: How to use?
 
+Altere o valor da variável `IP_HOST` para o IP de seu sistema operacional (o HOST, que tem o Hyper-V instalado e que gerencia as VMs Linux).
 Para aplicar as configurações:
 ```sh
 # nft -f /etc/nftables.conf
