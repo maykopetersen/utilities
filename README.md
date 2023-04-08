@@ -34,22 +34,22 @@ New-VMSwitch -Name "External - Virtual Switch" -SwitchType External
 4. Adicione uma interface de rede na Default Switch em uma vlan específica (ex.: vlan 2)
 5. Na interface 1 (geralmente `eth0`), configure um IP FIXO que se comunique com a internet, alterando, adequadamente, o arquivo `/etc/systemd/network/eth0.network`. Uma ideia para saber qual IP FIXO usar, é configurar a interface primeiro para DHCP, obter seus dados e, depois, alterar a interface para IP FIXO colocando os dados obtidos anteriormente. Você pode saber os dados obtidos pelo serviço DHCP executando:
 ```sh
-# interface=$(networkctl list --no-legend | awk 'NR==2{print $2}')
-# echo -e "[Match]\nName="$interface"\n\n[Network]\nDHCP=ipv4" > /etc/systemd/network/eth0.network
-# systemctl restart systemd-networkd.service
-# systemctl restart systemd-resolved.service
+interface=$(networkctl list --no-legend | awk 'NR==2{print $2}')
+echo -e "[Match]\nName="$interface"\n\n[Network]\nDHCP=ipv4" > /etc/systemd/network/eth0.network
+systemctl restart systemd-networkd.service
+systemctl restart systemd-resolved.service
 # ip addr # DHCP IP and subnet mask
 # ip route # DHCP gateway
 # resolvectl status # DHCP DNS Server
 # echo "Configure IP and MASK"
-# ipAdd=$(ip addr | grep $interface | grep inet | awk '{print $2}')
+ipAdd=$(ip addr | grep $interface | grep inet | awk '{print $2}')
 # echo "Configure Gateway"
-# ipRoute=$(ip route | grep $interface | grep default | awk '{print $3}')
+ipRoute=$(ip route | grep $interface | grep default | awk '{print $3}')
 # echo "Configure DNS Server"
-# dnsServ=$(resolvectl status $interface | grep "DNS Servers" | awk '{print $3}')
-# echo -e "[Match]\nName="$interface"\n\n[Network]\nAddress=$ipAdd\nGateway=$ipRoute\nDNS=$dnsServ" > /etc/systemd/network/eth0.network
-# systemctl restart systemd-networkd.service
-# systemctl restart systemd-resolved.service
+dnsServ=$(resolvectl status $interface | grep "DNS Servers" | awk '{print $3}')
+echo -e "[Match]\nName="$interface"\n\n[Network]\nAddress=$ipAdd\nGateway=$ipRoute\nDNS=$dnsServ" > /etc/systemd/network/eth0.network
+systemctl restart systemd-networkd.service
+systemctl restart systemd-resolved.service
 # ip addr # FIXED IP and subnet mask
 # ip route # FIXED gateway
 # resolvectl status # FIXED DNS Server
